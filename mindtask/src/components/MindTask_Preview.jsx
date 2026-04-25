@@ -1,8 +1,36 @@
+// ============================================================
+// MindTask - Notion Clone + Mental Health Chatbot
+// Full multi-file React project bundled for preview
+//
+// 📁 Project Structure:
+//   src/
+//     App.jsx
+//     context/
+//       ThemeContext.jsx
+//       AuthContext.jsx
+//     data/
+//       defaults.js
+//     utils/
+//       wellness.js
+//       markdown.jsx
+//     styles/
+//       GlobalStyles.jsx
+//     components/
+//       Icon.jsx
+//       Sidebar.jsx
+//       PageEditor.jsx
+//       TaskBoard.jsx
+//       ChatPanel.jsx
+//     pages/
+//       AuthPage.jsx
+//       Dashboard.jsx
+// ============================================================
+
 import { useState, useRef, useEffect, createContext, useContext } from "react";
 
 // ─── DEFAULTS ────────────────────────────────────────────────────────────────
 const DEFAULT_PAGES = [
-  { id: "p1", title: "Welcome to MindTask 🌱", icon: "🌱", content: " This is your personal productivity space with a mental wellness companion.\n\n## Getting Started\n\n- Create pages for your notes and ideas\n- Manage your tasks with the Task Board\n- Chat with MindEase whenever you feel stressed\n\n> **Tip:** Click the 💬 button in the bottom right to open your wellness companion anytime.", type: "page" },
+  { id: "p1", title: "Welcome to MindTask 🌱", icon: "🌱", content: "# Welcome to MindTask\n\nThis is your personal productivity space with a mental wellness companion.\n\n## Getting Started\n\n- Create pages for your notes and ideas\n- Manage your tasks with the Task Board\n- Chat with MindEase whenever you feel stressed\n\n> **Tip:** Click the 💬 button in the bottom right to open your wellness companion anytime.", type: "page" },
   { id: "p2", title: "My Notes", icon: "📝", content: "# My Notes\n\nUse this page to jot down your thoughts, ideas, and reflections.\n\n## Today's Focus\n\n- What's the most important thing to accomplish today?\n- What can I let go of?\n- How am I feeling right now?\n\n> Small consistent steps lead to big changes. 🌿", type: "page" },
   { id: "p3", title: "My Tasks", icon: "✅", content: "", type: "tasks" },
 ];
@@ -148,11 +176,9 @@ const ICON_PATHS = {
   eye:     "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z",
   eyeOff:  "M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19M1 1l22 22",
 };
-function Ic({ n, size=16, style={}, className="", color="" }) {
+function Ic({ n, size=16, style={}, className="" }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-      stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-      style={style} className={className}>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style} className={className}>
       <path d={ICON_PATHS[n]} />
     </svg>
   );
@@ -191,15 +217,14 @@ function GlobalStyles({ dark }) {
     .td:nth-child(2){animation-delay:0.18s;}
     .td:nth-child(3){animation-delay:0.36s;}
     @keyframes tdBounce{0%,60%,100%{transform:translateY(0);opacity:0.4}30%{transform:translateY(-4px);opacity:1}}
-    .pc h1{font-size:1.85rem;font-weight:700;margin:22px 0 10px;font-family:'Lora',serif;line-height:1.2;}
+    .pc h1{font-size:1.85rem;font-weight:700;margin:22px 0 10px;font-family:'Lora',serif;}
     .pc h2{font-size:1.25rem;font-weight:600;margin:18px 0 8px;}
     .pc h3{font-size:1.05rem;font-weight:600;margin:14px 0 6px;}
-    .pc p{margin-bottom:8px;line-height:1.72;}
+    .pc p{margin-bottom:7px;line-height:1.72;}
     .pc ul,.pc ol{padding-left:22px;margin-bottom:8px;}
-    .pc li{margin-bottom:5px;line-height:1.65;}
-    .pc blockquote{border-left:3px solid #5b8af0;padding-left:14px;opacity:0.75;font-style:italic;margin:14px 0;color:inherit;}
-    .pc strong{font-weight:700;}
-    .pc br{display:block;margin:4px 0;}
+    .pc li{margin-bottom:4px;line-height:1.65;}
+    .pc blockquote{border-left:3px solid #5b8af0;padding-left:14px;opacity:0.7;font-style:italic;margin:12px 0;}
+    .pc strong{font-weight:600;}
     .ph{background:rgba(248,113,113,0.14);color:#f87171;}
     .pm{background:rgba(251,191,36,0.14);color:#fbbf24;}
     .pl{background:rgba(74,222,128,0.14);color:#4ade80;}
@@ -230,7 +255,7 @@ function AuthPage() {
   const lbl = { fontSize:12, color:t.muted, fontWeight:500, display:"block", marginBottom:5 };
 
   return (
-    <div style={{ minHeight:"100vh", width:"100vw", background:t.bg, display:"flex", alignItems:"center", justifyContent:"center", padding:20 }}>
+    <div style={{ minHeight:"100vh", background:t.bg, display:"flex", alignItems:"center", justifyContent:"center", padding:20 }}>
       <div style={{ position:"fixed", inset:0, overflow:"hidden", pointerEvents:"none" }}>
         <div style={{ position:"absolute", top:"-10%", left:"-5%", width:500, height:500, borderRadius:"50%", background:`radial-gradient(circle,${t.dark?"rgba(91,138,240,0.07)":"rgba(91,138,240,0.05)"} 0%,transparent 70%)` }} />
         <div style={{ position:"absolute", bottom:"-10%", right:"-5%", width:600, height:600, borderRadius:"50%", background:`radial-gradient(circle,${t.dark?"rgba(192,132,252,0.06)":"rgba(192,132,252,0.04)"} 0%,transparent 70%)` }} />
@@ -302,10 +327,10 @@ function AuthPage() {
 }
 
 // ─── SIDEBAR ─────────────────────────────────────────────────────────────────
-function Sidebar({ pages, activePage, setActivePage, onAdd, onDelete, onChat, open, activeNav, setActiveNav }) {
+function Sidebar({ pages, activePage, setActivePage, onAdd, onDelete, onChat, open }) {
+  const { user, logout } = useAuth();
   const t = useTheme();
   if (!open) return null;
-  const NAV = [["🏠","Home"],["🔍","Search"],["📥","Inbox"]];
   return (
     <div style={{ width:245, minWidth:245, background:t.sidebar, borderRight:`1px solid ${t.border}`, display:"flex", flexDirection:"column", height:"100%", flexShrink:0 }}>
       {/* Workspace */}
@@ -313,20 +338,26 @@ function Sidebar({ pages, activePage, setActivePage, onAdd, onDelete, onChat, op
         <div style={{ width:30, height:30, borderRadius:8, background:"linear-gradient(135deg,#5b8af0,#c084fc)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:700, color:"#fff", flexShrink:0 }}>M</div>
         <div style={{ flex:1, overflow:"hidden" }}>
           <div style={{ fontWeight:600, fontSize:13.5, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>MindTask</div>
+          <div style={{ fontSize:11, color:t.muted, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{user?.email}</div>
         </div>
       </div>
 
-      {/* Nav - fully clickable */}
-      <div style={{ padding:"8px 8px 0" }}>
-        {NAV.map(([ic,lb])=>(
-          <div key={lb} className="sb-item" onClick={()=>setActiveNav(lb)}
-            style={{ display:"flex", alignItems:"center", gap:8, padding:"6px 10px", fontSize:13, cursor:"pointer",
-              color: activeNav===lb ? t.accent : t.muted,
-              background: activeNav===lb ? t.accentSoft : "transparent",
-              borderRadius:7, fontWeight: activeNav===lb ? 500 : 400,
-            }}>
-            <span>{ic}</span>{lb}
+      {/* User strip */}
+      <div style={{ padding:"10px 10px 8px", borderBottom:`1px solid ${t.border}` }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8, padding:"6px 8px", borderRadius:8 }}>
+          <div style={{ width:28, height:28, borderRadius:"50%", background:user?.color||"#5b8af0", display:"flex", alignItems:"center", justifyContent:"center", fontSize:11, fontWeight:700, color:"#fff", flexShrink:0 }}>{user?.avatar}</div>
+          <div style={{ flex:1, overflow:"hidden" }}>
+            <div style={{ fontSize:12.5, fontWeight:500, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{user?.name}</div>
+            <div style={{ fontSize:10.5, color:t.muted, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{user?.email}</div>
           </div>
+          <button className="btn" onClick={logout} title="Sign out" style={{ color:t.muted, padding:4, borderRadius:5, lineHeight:0 }}><Ic n="logout" size={13} /></button>
+        </div>
+      </div>
+
+      {/* Nav */}
+      <div style={{ padding:"8px 8px 0" }}>
+        {[["🏠","Home"],["🔍","Search"],["📥","Inbox"]].map(([ic,lb])=>(
+          <div key={lb} className="sb-item" style={{ display:"flex", alignItems:"center", gap:8, padding:"6px 10px", color:t.muted, fontSize:13 }}><span>{ic}</span>{lb}</div>
         ))}
       </div>
 
@@ -366,121 +397,23 @@ function Sidebar({ pages, activePage, setActivePage, onAdd, onDelete, onChat, op
   );
 }
 
-// ─── NOTE CARD GRID (for "My Notes" type pages) ──────────────────────────────
-const NOTE_COLORS = ["#5b8af0","#c084fc","#4ade80","#fbbf24","#f87171","#34d399","#60a5fa","#f472b6"];
-function NotesGrid({ notes, onOpen, onAdd, t, user }) {
-  return (
-    <div style={{ padding:"48px 60px 80px", maxWidth:1000, margin:"0 auto", width:"100%" }}>
-      <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:32 }}>
-        <span style={{ fontSize:44 }}>📝</span>
-        <div>
-          <h1 style={{ fontSize:"2rem", fontWeight:700, fontFamily:"'Lora',serif", color:t.text }}>My Notes</h1>
-          <p style={{ fontSize:13, color:t.muted, marginTop:3 }}>{notes.length} notes</p>
-        </div>
-      </div>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(180px, 1fr))", gap:16 }}>
-        {notes.map((note, i) => (
-          <div key={note.id} onClick={() => onOpen(note)}
-            style={{ background:t.card, border:`1px solid ${t.border}`, borderRadius:14, padding:"18px 16px 14px", cursor:"pointer", minHeight:140, display:"flex", flexDirection:"column", gap:8, transition:"transform 0.15s, box-shadow 0.15s", position:"relative", overflow:"hidden" }}
-            onMouseEnter={e=>{ e.currentTarget.style.transform="translateY(-3px)"; e.currentTarget.style.boxShadow=t.shadow; }}
-            onMouseLeave={e=>{ e.currentTarget.style.transform="translateY(0)"; e.currentTarget.style.boxShadow="none"; }}>
-            <div style={{ width:32, height:32, borderRadius:8, background:NOTE_COLORS[i % NOTE_COLORS.length], display:"flex", alignItems:"center", justifyContent:"center", fontSize:16, marginBottom:4 }}>
-              {note.icon || "📄"}
-            </div>
-            <div style={{ fontWeight:600, fontSize:13.5, color:t.text, lineHeight:1.3 }}>{note.title}</div>
-            <div style={{ fontSize:11.5, color:t.muted, lineHeight:1.4, flex:1, overflow:"hidden", display:"-webkit-box", WebkitLineClamp:3, WebkitBoxOrient:"vertical" }}>
-              {note.content?.replace(/[#>*-]/g,"").trim().slice(0,80) || "Empty note"}
-            </div>
-            <div style={{ display:"flex", alignItems:"center", gap:5, marginTop:4 }}>
-              <div style={{ width:16, height:16, borderRadius:"50%", background:user?.color||"#5b8af0", display:"flex", alignItems:"center", justifyContent:"center", fontSize:8, fontWeight:700, color:"#fff" }}>{user?.avatar?.[0]}</div>
-              <span style={{ fontSize:10.5, color:t.muted }}>{new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}</span>
-            </div>
-          </div>
-        ))}
-        {/* New note card */}
-        <div onClick={onAdd}
-          style={{ border:`2px dashed ${t.border}`, borderRadius:14, padding:"18px 16px", cursor:"pointer", minHeight:140, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:8, color:t.muted, transition:"border-color 0.15s, color 0.15s" }}
-          onMouseEnter={e=>{ e.currentTarget.style.borderColor=t.accent; e.currentTarget.style.color=t.accent; }}
-          onMouseLeave={e=>{ e.currentTarget.style.borderColor=t.border; e.currentTarget.style.color=t.muted; }}>
-          <div style={{ fontSize:28 }}>+</div>
-          <span style={{ fontSize:13, fontWeight:500 }}>New page</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── PAGE EDITOR ─────────────────────────────────────────────────────────────
 const EMOJIS = ["📄","📋","🌱","✨","💡","🎯","📝","🔖","⚡","🧠","💙","🌿","🎨","🚀","🌸","🍃","📚","🔬"];
-function PageEditor({ page, onUpdate, onBack }) {
+function PageEditor({ page, onUpdate }) {
   const t = useTheme();
-  const [editing, setEditing] = useState(false);
-  const shuffle = () => onUpdate(page.id, "icon", EMOJIS[Math.floor(Math.random() * EMOJIS.length)]);
-
-  // Check if this is the welcome page
-  const isWelcomePage = page.title === "Welcome to MindTask 🌱";
-
+  const shuffle = () => onUpdate(page.id,"icon",EMOJIS[Math.floor(Math.random()*EMOJIS.length)]);
   return (
     <div style={{ maxWidth:860, margin:"0 auto", width:"100%", padding:"48px 60px 80px" }}>
-
-      {/* Back button */}
-      {onBack && (
-        <button onClick={onBack}
-          style={{ display:"flex", alignItems:"center", gap:6, color:t.muted, fontSize:13, marginBottom:20, padding:"5px 0", background:"none", border:"none", cursor:"pointer" }}>
-          ← Back to Notes
-        </button>
-      )}
-
-      {/* Emoji icon */}
-      <button onClick={shuffle} title="Click to change icon"
-        style={{ fontSize:46, marginBottom:10, display:"block", lineHeight:1, padding:"4px 0", background:"none", border:"none", cursor:"pointer" }}>
-        {page.icon}
-      </button>
-
-      {/* Title */}
-      <input value={page.title} onChange={e => onUpdate(page.id, "title", e.target.value)}
-        placeholder="Untitled"
-        style={{ width:"100%", fontSize:"2.2rem", fontWeight:700, fontFamily:"'Lora',serif", background:"none", border:"none", color:t.text, lineHeight:1.2, marginBottom:20, outline:"none", display:"block" }} />
-
-      {/* View / Edit toggle - REMOVED for welcome page */}
-      {!isWelcomePage && (
-        <div style={{ display:"flex", gap:8, marginBottom:24 }}>
-          <button onClick={() => setEditing(false)}
-            style={{ fontSize:12, padding:"5px 14px", borderRadius:7, fontWeight:500, cursor:"pointer", border:`1px solid ${!editing ? t.accent : t.border}`, background:!editing ? t.accent : "transparent", color:!editing ? "#fff" : t.muted }}>
-            👁 View
-          </button>
-          <button onClick={() => setEditing(true)}
-            style={{ fontSize:12, padding:"5px 14px", borderRadius:7, fontWeight:500, cursor:"pointer", border:`1px solid ${editing ? t.accent : t.border}`, background:editing ? t.accent : "transparent", color:editing ? "#fff" : t.muted }}>
-            ✏️ Edit
-          </button>
-        </div>
-      )}
-
-      {/* Content area */}
-      {isWelcomePage ? (
-        // Welcome page always in view mode, no editing
-        <div style={{ minHeight:"60vh" }}>
-          {page.content
-            ? <div className="pc" style={{ color:t.text, fontSize:15, lineHeight:1.75 }}>{renderMarkdown(page.content)}</div>
-            : <p style={{ color:t.muted, fontStyle:"italic", fontSize:15 }}>Welcome content</p>
-          }
-        </div>
-      ) : editing ? (
-        <textarea
-          value={page.content}
-          onChange={e => onUpdate(page.id, "content", e.target.value)}
-          placeholder="Start writing... Use # for headings, - for bullets, > for quotes, **bold**"
-          autoFocus
-          style={{ width:"100%", minHeight:"60vh", background:t.inputBg, border:`1px solid ${t.border}`, borderRadius:10, padding:"16px", color:t.text, fontSize:15, lineHeight:1.75, outline:"none", resize:"none", display:"block" }}
-        />
-      ) : (
-        <div onClick={() => setEditing(true)} style={{ cursor:"text", minHeight:"60vh" }}>
-          {page.content
-            ? <div className="pc" style={{ color:t.text, fontSize:15, lineHeight:1.75 }}>{renderMarkdown(page.content)}</div>
-            : <p style={{ color:t.muted, fontStyle:"italic", fontSize:15 }}>Click here to start writing...</p>
-          }
-        </div>
-      )}
+      <button className="btn" onClick={shuffle} title="Click to change icon" style={{ fontSize:46, marginBottom:10, display:"block", lineHeight:1, padding:"4px 0" }}>{page.icon}</button>
+      <input value={page.title} onChange={e=>onUpdate(page.id,"title",e.target.value)} placeholder="Untitled"
+        style={{ width:"100%", fontSize:"2.2rem", fontWeight:700, fontFamily:"'Lora',serif", background:"none", border:"none", color:t.text, lineHeight:1.2, marginBottom:18, outline:"none" }} />
+      <textarea value={page.content} onChange={e=>onUpdate(page.id,"content",e.target.value)}
+        placeholder="Start writing... Use # for headings, - for bullets, > for quotes, **bold**"
+        style={{ width:"100%", minHeight:"calc(100vh - 300px)", background:"none", border:"none", color:t.text, fontSize:15, lineHeight:1.75, outline:"none", resize:"none" }} />
+      <div style={{ marginTop:32, borderTop:`1px solid ${t.border}`, paddingTop:24 }}>
+        <div style={{ fontSize:11, color:t.muted, marginBottom:10, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.07em", opacity:0.6 }}>Rendered Preview</div>
+        <div className="pc" style={{ color:t.text, fontSize:14.5, opacity:0.85 }}>{renderMarkdown(page.content)}</div>
+      </div>
     </div>
   );
 }
@@ -609,7 +542,7 @@ function ChatPanel({ onClose }) {
   };
 
   return (
-    <div className="pop-in" style={{ position:"fixed", bottom:88, right:24, width:340, height:460, background:t.chatBg, border:`1px solid ${t.border}`, borderRadius:16, display:"flex", flexDirection:"column", zIndex:300, boxShadow:"0 8px 32px rgba(0,0,0,0.35)", overflow:"hidden" }}>
+    <div className="pop-in" style={{ position:"fixed", bottom:24, right:24, width:375, height:550, background:t.chatBg, border:`1px solid ${t.border}`, borderRadius:18, display:"flex", flexDirection:"column", zIndex:300, boxShadow:t.shadowLg, overflow:"hidden" }}>
       {/* Header */}
       <div style={{ padding:"14px 16px", borderBottom:`1px solid ${t.border}`, display:"flex", alignItems:"center", gap:10, background:t.dark?"#161616":"#f5f5f3", flexShrink:0 }}>
         <div style={{ width:36, height:36, borderRadius:"50%", background:"linear-gradient(135deg,#4ade80,#5b8af0)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, flexShrink:0 }}>🌿</div>
@@ -660,191 +593,9 @@ function ChatPanel({ onClose }) {
           placeholder="Share how you're feeling…"
           style={{ flex:1, background:t.inputBg, border:`1px solid ${t.border}`, borderRadius:11, padding:"9px 13px", color:t.text, fontSize:13, outline:"none" }} />
         <button className="btn tc" onClick={()=>send()}
-          style={{ background:"linear-gradient(135deg,#5b8af0,#c084fc)", width:38, height:38, borderRadius:11, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, boxShadow:"0 2px 10px rgba(91,138,240,0.3)", border:"none", cursor:"pointer", color:"white", fontSize:16, lineHeight:1 }}>
-          &#9658;
+          style={{ background:"linear-gradient(135deg,#5b8af0,#c084fc)", color:"#fff", width:38, height:38, borderRadius:11, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, boxShadow:"0 2px 10px rgba(91,138,240,0.3)" }}>
+          <Ic n="send" size={14} />
         </button>
-      </div>
-    </div>
-  );
-}
-
-// ─── NAV VIEWS ───────────────────────────────────────────────────────────────
-function HomeView({ user, pages, tasks, setActiveId, setActiveNav, t }) {
-  const done = tasks.filter(tk=>tk.status==="done").length;
-  const inProgress = tasks.filter(tk=>tk.status==="in-progress").length;
-  const todo = tasks.filter(tk=>tk.status==="todo").length;
-  const [aiInput, setAiInput] = useState("");
-  const [aiMsgs, setAiMsgs] = useState([]);
-  const [aiTyping, setAiTyping] = useState(false);
-  const aiEndRef = useRef(null);
-  useEffect(()=>{ aiEndRef.current?.scrollIntoView({behavior:"smooth"}); },[aiMsgs,aiTyping]);
-
-  const sendAI = async (txt) => {
-    const msg = (txt||aiInput).trim(); if(!msg) return;
-    setAiInput("");
-    setAiMsgs(m=>[...m,{role:"user",text:msg}]);
-    setAiTyping(true);
-    const reply = await getAIResponse(msg, user?.name||"friend");
-    setAiTyping(false);
-    setAiMsgs(m=>[...m,{role:"assistant",text:reply}]);
-  };
-
-  const SUGGESTIONS = ["Help me focus 🎯","I'm feeling stressed 😔","Boost my day 🌟","I need a break 😮‍💨"];
-
-  return (
-    <div style={{ padding:"48px 60px 80px", maxWidth:900, margin:"0 auto", width:"100%" }}>
-      {/* Greeting */}
-      <div style={{ marginBottom:36, textAlign:"center" }}>
-        <h1 style={{ fontSize:"2.2rem", fontWeight:700, fontFamily:"'Lora',serif", color:t.text }}>Hi {user?.name?.split(" ")[0]} 👋</h1>
-        <p style={{ color:t.muted, fontSize:15, marginTop:6 }}>Where should we start?</p>
-      </div>
-
-      {/* Stats */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:14, marginBottom:32 }}>
-        {[
-          { label:"To Do", count:todo, color:"#6b6b6b", emoji:"📋" },
-          { label:"In Progress", count:inProgress, color:"#fbbf24", emoji:"⚡" },
-          { label:"Completed", count:done, color:"#4ade80", emoji:"✅" },
-        ].map(s=>(
-          <div key={s.label} style={{ background:t.card, border:`1px solid ${t.border}`, borderRadius:12, padding:"18px 20px" }}>
-            <div style={{ fontSize:24, marginBottom:8 }}>{s.emoji}</div>
-            <div style={{ fontSize:"1.6rem", fontWeight:700, color:s.color }}>{s.count}</div>
-            <div style={{ fontSize:12, color:t.muted, marginTop:2 }}>{s.label}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Recent pages */}
-      <div style={{ marginBottom:36 }}>
-        <div style={{ fontSize:11, color:t.muted, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Recent Pages</div>
-        <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-          {pages.slice(0,5).map(pg=>(
-            <div key={pg.id} onClick={()=>{ setActiveId(pg.id); setActiveNav(null); }}
-              style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 14px", background:t.card, border:`1px solid ${t.border}`, borderRadius:10, cursor:"pointer", transition:"background 0.12s" }}
-              onMouseEnter={e=>e.currentTarget.style.background=t.hover}
-              onMouseLeave={e=>e.currentTarget.style.background=t.card}>
-              <span style={{ fontSize:18 }}>{pg.icon}</span>
-              <span style={{ fontSize:13.5, fontWeight:500, color:t.text }}>{pg.title}</span>
-              <span style={{ marginLeft:"auto", fontSize:11, color:t.muted, background:t.tagBg, padding:"2px 8px", borderRadius:6 }}>{pg.type==="tasks"?"Tasks":"Page"}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* AI Chat Box - Gemini style - BELOW containers */}
-      <div style={{ background:t.card, border:`1px solid ${t.border}`, borderRadius:18, padding:"6px 6px 10px", boxShadow:t.shadow }}>
-        {/* Message history inside box */}
-        {aiMsgs.length > 0 && (
-          <div style={{ maxHeight:220, overflowY:"auto", padding:"10px 14px 6px", display:"flex", flexDirection:"column", gap:10, marginBottom:4 }}>
-            {aiMsgs.map((m,i)=>(
-              <div key={i} style={{ display:"flex", justifyContent:m.role==="user"?"flex-end":"flex-start", gap:8, alignItems:"flex-end" }}>
-                {m.role==="assistant" && <div style={{ width:24,height:24,borderRadius:"50%",background:"linear-gradient(135deg,#4ade80,#5b8af0)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,flexShrink:0 }}>🌿</div>}
-                <div style={{ maxWidth:"80%", padding:"9px 13px", borderRadius:m.role==="user"?"14px 14px 4px 14px":"14px 14px 14px 4px", background:m.role==="user"?t.userBubble:t.aiBubble, fontSize:13.5, color:t.text, lineHeight:1.5, border:`1px solid ${m.role==="user"?"transparent":t.border}` }}>
-                  {m.text}
-                </div>
-                {m.role==="user" && <div style={{ width:24,height:24,borderRadius:"50%",background:user?.color||"#5b8af0",display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:"#fff",flexShrink:0 }}>{user?.avatar}</div>}
-              </div>
-            ))}
-            {aiTyping && (
-              <div style={{ display:"flex", alignItems:"flex-end", gap:8 }}>
-                <div style={{ width:24,height:24,borderRadius:"50%",background:"linear-gradient(135deg,#4ade80,#5b8af0)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,flexShrink:0 }}>🌿</div>
-                <div style={{ background:t.aiBubble, border:`1px solid ${t.border}`, borderRadius:"14px 14px 14px 4px", padding:"10px 14px", display:"flex", gap:4, alignItems:"center" }}>
-                  {[0,1,2].map(i=><div key={i} className="td" style={{ width:5,height:5,borderRadius:"50%",background:t.muted }} />)}
-                </div>
-              </div>
-            )}
-            <div ref={aiEndRef} />
-          </div>
-        )}
-        {/* Input row */}
-        <div style={{ display:"flex", alignItems:"center", gap:8, padding:"4px 8px" }}>
-          <input value={aiInput} onChange={e=>setAiInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&sendAI()}
-            placeholder="Ask MindEase anything…"
-            style={{ flex:1, background:"transparent", border:"none", color:t.text, fontSize:15, outline:"none", padding:"10px 8px" }} />
-          <button onClick={()=>sendAI()}
-            style={{ background:"linear-gradient(135deg,#5b8af0,#c084fc)", width:38, height:38, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", border:"none", cursor:"pointer", flexShrink:0, boxShadow:"0 2px 8px rgba(91,138,240,0.35)", color:"white", fontSize:16, lineHeight:1 }}>
-            &#9658;
-          </button>
-        </div>
-      </div>
-
-      {/* Suggestion chips */}
-      <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:14, justifyContent:"center" }}>
-        {SUGGESTIONS.map(s=>(
-          <button key={s} onClick={()=>sendAI(s)}
-            style={{ background:t.card, border:`1px solid ${t.border}`, borderRadius:20, padding:"7px 16px", fontSize:13, color:t.text, cursor:"pointer", fontWeight:500 }}
-            onMouseEnter={e=>{ e.currentTarget.style.borderColor=t.accent; e.currentTarget.style.color=t.accent; }}
-            onMouseLeave={e=>{ e.currentTarget.style.borderColor=t.border; e.currentTarget.style.color=t.text; }}>
-            {s}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function SearchView({ pages, tasks, setActiveId, setActiveNav, t }) {
-  const [query, setQuery] = useState("");
-  const q = query.toLowerCase();
-  const matchedPages = q ? pages.filter(p=>p.title.toLowerCase().includes(q)||p.content?.toLowerCase().includes(q)) : [];
-  const matchedTasks = q ? tasks.filter(tk=>tk.title.toLowerCase().includes(q)) : [];
-  return (
-    <div style={{ padding:"48px 60px 80px", maxWidth:860, margin:"0 auto", width:"100%" }}>
-      <h1 style={{ fontSize:"1.8rem", fontWeight:700, fontFamily:"'Lora',serif", color:t.text, marginBottom:20 }}>🔍 Search</h1>
-      <input value={query} onChange={e=>setQuery(e.target.value)} autoFocus placeholder="Search pages and tasks..."
-        style={{ width:"100%", background:t.inputBg, border:`1px solid ${t.border}`, borderRadius:12, padding:"13px 18px", color:t.text, fontSize:15, outline:"none", marginBottom:24 }} />
-      {q && (
-        <div>
-          {matchedPages.length > 0 && <>
-            <div style={{ fontSize:11, color:t.muted, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>Pages ({matchedPages.length})</div>
-            {matchedPages.map(pg=>(
-              <div key={pg.id} onClick={()=>{ setActiveId(pg.id); setActiveNav(null); }}
-                style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 14px", background:t.card, border:`1px solid ${t.border}`, borderRadius:10, cursor:"pointer", marginBottom:6 }}>
-                <span style={{ fontSize:18 }}>{pg.icon}</span>
-                <span style={{ fontSize:13.5, color:t.text }}>{pg.title}</span>
-              </div>
-            ))}
-          </>}
-          {matchedTasks.length > 0 && <>
-            <div style={{ fontSize:11, color:t.muted, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8, marginTop:16 }}>Tasks ({matchedTasks.length})</div>
-            {matchedTasks.map(tk=>(
-              <div key={tk.id} style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 14px", background:t.card, border:`1px solid ${t.border}`, borderRadius:10, marginBottom:6 }}>
-                <span style={{ fontSize:14 }}>✅</span>
-                <span style={{ fontSize:13.5, color:t.text }}>{tk.title}</span>
-                <span style={{ marginLeft:"auto", fontSize:11, color:t.muted }}>{tk.status}</span>
-              </div>
-            ))}
-          </>}
-          {matchedPages.length===0 && matchedTasks.length===0 && (
-            <div style={{ textAlign:"center", color:t.muted, fontSize:14, padding:"40px 0" }}>No results for "{query}"</div>
-          )}
-        </div>
-      )}
-      {!q && <div style={{ textAlign:"center", color:t.muted, fontSize:14, padding:"40px 0" }}>Start typing to search your workspace...</div>}
-    </div>
-  );
-}
-
-function InboxView({ t }) {
-  const items = [
-    { icon:"💬", title:"MindEase is ready", desc:"Your wellness companion is available anytime.", time:"Just now" },
-    { icon:"✅", title:"Task board set up", desc:"Your tasks have been pre-loaded. Start managing them!", time:"Today" },
-    { icon:"🌱", title:"Welcome to MindTask", desc:"Your workspace is ready. Start creating pages.", time:"Today" },
-  ];
-  return (
-    <div style={{ padding:"48px 60px 80px", maxWidth:860, margin:"0 auto", width:"100%" }}>
-      <h1 style={{ fontSize:"1.8rem", fontWeight:700, fontFamily:"'Lora',serif", color:t.text, marginBottom:20 }}>📥 Inbox</h1>
-      <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-        {items.map((item,i)=>(
-          <div key={i} style={{ display:"flex", alignItems:"flex-start", gap:12, padding:"14px 16px", background:t.card, border:`1px solid ${t.border}`, borderRadius:12 }}>
-            <span style={{ fontSize:22, flexShrink:0 }}>{item.icon}</span>
-            <div style={{ flex:1 }}>
-              <div style={{ fontSize:13.5, fontWeight:500, color:t.text }}>{item.title}</div>
-              <div style={{ fontSize:12.5, color:t.muted, marginTop:3 }}>{item.desc}</div>
-            </div>
-            <span style={{ fontSize:11, color:t.muted, whiteSpace:"nowrap" }}>{item.time}</span>
-          </div>
-        ))}
       </div>
     </div>
   );
@@ -852,197 +603,55 @@ function InboxView({ t }) {
 
 // ─── DASHBOARD ───────────────────────────────────────────────────────────────
 function Dashboard() {
-  const { user, getData, setPages, setTasks, logout } = useAuth();
+  const { user, getData, setPages, setTasks } = useAuth();
   const t = useTheme();
-  // Start with no activeNav and set activeId to the Welcome page (p1)
-  const welcomePageId = `${user?.id}-p1`;
-  const [activeId, setActiveId] = useState(welcomePageId);
-  const [activeNav, setActiveNav] = useState(null); // Changed from "Home" to null to show the welcome page
-  const [openedNote, setOpenedNote] = useState(null);
+  const [activeId, setActiveId] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [chatOpen, setChatOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const userMenuRef = useRef(null);
-
-  // Close user menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
-        setUserMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const data = getData();
   const pages = data?.pages || [];
   const tasks = data?.tasks || [];
   const activePage = pages.find(p=>p.id===activeId) || pages[0];
 
-  const handleSetActivePage = (id) => {
-    setActiveId(id);
-    setActiveNav(null);
-    setOpenedNote(null);
-  };
-
   const addPage = () => {
     const id = `${user.id}-p${Date.now()}`;
-    const newPage = { id, title:"Untitled", icon:"📄", content:"", type:"page" };
-    setPages(p=>[...p, newPage]);
-    setActiveId(id); setActiveNav(null); setOpenedNote(null);
+    setPages(p=>[...p,{id,title:"Untitled",icon:"📄",content:"# Untitled\n\nStart writing here...",type:"page"}]);
+    setActiveId(id);
   };
-
-  const addNoteFromGrid = () => {
-    const id = `${user.id}-p${Date.now()}`;
-    const newNote = { id, title:"New Note", icon:"📄", content:"", type:"page" };
-    setPages(p=>[...p, newNote]);
-    setOpenedNote(newNote);
-  };
-
   const deletePage = (id) => {
     setPages(p=>p.filter(pg=>pg.id!==id));
     if(activePage?.id===id){ const rem=pages.filter(pg=>pg.id!==id); setActiveId(rem[0]?.id||null); }
   };
   const updatePage = (id,field,val) => setPages(p=>p.map(pg=>pg.id===id?{...pg,[field]:val}:pg));
 
-  const notesHubPage = pages.find(p=>p.title==="My Notes" || p.id.endsWith("-p2"));
-  const isNotesHub = !activeNav && activePage && (activePage.id === notesHubPage?.id);
-  const notePages = pages.filter(p=>p.type==="page" && p.id !== notesHubPage?.id && !p.id.endsWith("-p1"));
-
-  const topbarTitle = activeNav ? activeNav
-    : openedNote ? `${openedNote.icon} ${openedNote.title}`
-    : activePage ? `${activePage.icon} ${activePage.title}`
-    : "MindTask";
-
-  const renderContent = () => {
-    if (activeNav === "Home")   return <HomeView user={user} pages={pages} tasks={tasks} setActiveId={handleSetActivePage} setActiveNav={setActiveNav} t={t} />;
-    if (activeNav === "Search") return <SearchView pages={pages} tasks={tasks} setActiveId={handleSetActivePage} setActiveNav={setActiveNav} t={t} />;
-    if (activeNav === "Inbox")  return <InboxView t={t} />;
-    if (activePage?.type==="tasks") return <TaskBoard tasks={tasks} onUpdate={setTasks} />;
-    if (isNotesHub) {
-      if (openedNote) {
-        const liveNote = pages.find(p=>p.id===openedNote.id) || openedNote;
-        return <PageEditor page={liveNote} onUpdate={updatePage} onBack={()=>setOpenedNote(null)} />;
-      }
-      return <NotesGrid notes={notePages} onOpen={(note)=>setOpenedNote(note)} onAdd={addNoteFromGrid} t={t} user={user} />;
-    }
-    if (activePage) return <PageEditor page={activePage} onUpdate={updatePage} />;
-    return <div style={{ display:"flex",alignItems:"center",justifyContent:"center",height:"100%",color:t.muted,fontSize:14 }}>Select a page or create a new one.</div>;
-  };
-
   return (
-    <div style={{ display:"flex", height:"100vh", width:"100vw", background:t.bg, color:t.text, overflow:"hidden" }}>
-      <Sidebar pages={pages} activePage={activeNav ? null : activePage} setActivePage={handleSetActivePage} onAdd={addPage} onDelete={deletePage} onChat={()=>setChatOpen(true)} open={sidebarOpen} activeNav={activeNav} setActiveNav={setActiveNav} />
+    <div style={{ display:"flex", height:"100vh", background:t.bg, color:t.text, overflow:"hidden" }}>
+      <Sidebar pages={pages} activePage={activePage} setActivePage={setActiveId} onAdd={addPage} onDelete={deletePage} onChat={()=>setChatOpen(true)} open={sidebarOpen} />
 
       <div style={{ flex:1, display:"flex", flexDirection:"column", overflow:"hidden", minWidth:0 }}>
         {/* Topbar */}
         <div style={{ height:46, borderBottom:`1px solid ${t.border}`, display:"flex", alignItems:"center", padding:"0 16px", gap:10, background:t.surface, flexShrink:0 }}>
           <button className="btn tc" onClick={()=>setSidebarOpen(v=>!v)} style={{ color:t.muted, padding:6, borderRadius:7, lineHeight:0 }}><Ic n="menu" size={15} /></button>
           <div style={{ flex:1, display:"flex", alignItems:"center", gap:7, fontSize:13.5, overflow:"hidden" }}>
-            <span style={{ color:t.text, fontWeight:500, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{topbarTitle}</span>
+            <span style={{ fontSize:16, flexShrink:0 }}>{activePage?.icon}</span>
+            <span style={{ color:t.text, fontWeight:500, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{activePage?.title||"Select a page"}</span>
           </div>
           <button className="btn tc" onClick={t.toggle} style={{ color:t.muted, padding:7, borderRadius:7, lineHeight:0 }}><Ic n={t.dark?"sun":"moon"} size={14} /></button>
-          
-          {/* User Avatar with Dropdown Menu */}
-          <div ref={userMenuRef} style={{ position:"relative" }}>
-            <button 
-              className="btn tc" 
-              onClick={() => setUserMenuOpen(!userMenuOpen)} 
-              title="User menu"
-              style={{ 
-                padding:0, 
-                background:'none', 
-                border:'none', 
-                cursor:'pointer',
-                transition:'opacity 0.15s'
-              }}
-              onMouseEnter={e => e.currentTarget.style.opacity = '0.8'}
-              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-            >
-              <div style={{ 
-                width:28, 
-                height:28, 
-                borderRadius:"50%", 
-                background:user?.color||t.accent, 
-                display:"flex", 
-                alignItems:"center", 
-                justifyContent:"center", 
-                fontSize:11, 
-                fontWeight:700, 
-                color:"#fff", 
-                flexShrink:0 
-              }}>
-                {user?.avatar}
-              </div>
-            </button>
-
-            {/* Dropdown Menu */}
-            {userMenuOpen && (
-              <div className="slide-up" style={{
-                position:"absolute",
-                top:"calc(100% + 8px)",
-                right:0,
-                width:240,
-                background:t.surface,
-                border:`1px solid ${t.border}`,
-                borderRadius:12,
-                boxShadow:t.shadowLg,
-                zIndex:300,
-                overflow:"hidden"
-              }}>
-                {/* User Info Section */}
-                <div style={{ padding:"14px 16px", borderBottom:`1px solid ${t.border}` }}>
-                  <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:8 }}>
-                    <div style={{ width:36, height:36, borderRadius:"50%", background:user?.color||t.accent, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:700, color:"#fff" }}>
-                      {user?.avatar}
-                    </div>
-                    <div>
-                      <div style={{ fontSize:13.5, fontWeight:600, color:t.text }}>{user?.name}</div>
-                      <div style={{ fontSize:11, color:t.muted }}>{user?.email}</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Logout Button */}
-                <button
-                  onClick={() => {
-                    logout();
-                    setUserMenuOpen(false);
-                  }}
-                  className="btn tc"
-                  style={{
-                    width:"100%",
-                    padding:"12px 16px",
-                    display:"flex",
-                    alignItems:"center",
-                    gap:10,
-                    color:t.muted,
-                    fontSize:13,
-                    textAlign:"left",
-                    background:"transparent",
-                    border:"none",
-                    cursor:"pointer",
-                    transition:"background 0.12s"
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.background = t.hover}
-                  onMouseLeave={e => e.currentTarget.style.background = "transparent"}
-                >
-                  <Ic n="logout" size={14} />
-                  <span>Sign out</span>
-                </button>
-              </div>
-            )}
-          </div>
+          <div style={{ width:28, height:28, borderRadius:"50%", background:user?.color||t.accent, display:"flex", alignItems:"center", justifyContent:"center", fontSize:11, fontWeight:700, color:"#fff", flexShrink:0 }} title={user?.name}>{user?.avatar}</div>
         </div>
 
         {/* Content */}
-        <div style={{ flex:1, overflow:"auto", width:"100%" }}>
-          {renderContent()}
+        <div style={{ flex:1, overflow:"auto" }}>
+          {activePage?.type==="tasks"
+            ? <TaskBoard tasks={tasks} onUpdate={setTasks} />
+            : activePage
+              ? <PageEditor page={activePage} onUpdate={updatePage} />
+              : <div style={{ display:"flex",alignItems:"center",justifyContent:"center",height:"100%",color:t.muted,fontSize:14 }}>Select a page or create a new one.</div>
+          }
         </div>
       </div>
 
-      {/* Floating chat button */}
       {!chatOpen && (
         <button className="btn pop-in" onClick={()=>setChatOpen(true)}
           style={{ position:"fixed", bottom:24, right:24, width:54, height:54, borderRadius:"50%", background:"linear-gradient(135deg,#5b8af0,#c084fc)", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 4px 24px rgba(91,138,240,0.45)", zIndex:200, fontSize:22 }}>
