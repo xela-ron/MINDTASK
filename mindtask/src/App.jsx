@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, createContext, useContext } from "react";
 
 // ─── DEFAULTS ────────────────────────────────────────────────────────────────
 const DEFAULT_PAGES = [
-  { id: "p1", title: "Welcome to MindTask 🌱", icon: "🌱", content: " This is your personal productivity space with a mental wellness companion.\n\n## Getting Started\n\n- Create pages for your notes and ideas\n- Manage your tasks with the Task Board\n- Chat with MindEase whenever you feel stressed\n\n> **Tip:** Click the 💬 button in the bottom right to open your wellness companion anytime.", type: "page" },
+  { id: "p1", title: "Welcome to MindTask 🌱", icon: "🌱", content: " This is your personal productivity space with a mental wellness companion.\n\n## Getting Started\n\n- Create pages for your notes and ideas\n- Manage your tasks with the Task Board\n- Chat with MindEase whenever you feel stressed\n\n> *Tip:* Click the 💬 button in the bottom right to open your wellness companion anytime.", type: "page" },
   { id: "p2", title: "My Notes", icon: "📝", content: "# My Notes\n\nUse this page to jot down your thoughts, ideas, and reflections.\n\n## Today's Focus\n\n- What's the most important thing to accomplish today?\n- What can I let go of?\n- How am I feeling right now?\n\n> Small consistent steps lead to big changes. 🌿", type: "page" },
   { id: "p3", title: "My Tasks", icon: "✅", content: "", type: "tasks" },
 ];
@@ -116,7 +116,7 @@ function AuthProvider({ children }) {
   };
   const register = (name, email, pw) => {
     if (users.current.find(u => u.email === email)) { setErr("Email already in use."); return false; }
-    const id = `u${Date.now()}`;
+    const id = `${user.id}-p${Date.now()}`;
     const initials = name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
     const colors = ["#f87171","#fbbf24","#34d399","#60a5fa","#a78bfa","#f472b6"];
     const nu = { id, name, email, password: pw, avatar: initials, color: colors[Math.floor(Math.random()*colors.length)] };
@@ -162,7 +162,7 @@ function Ic({ n, size=16, style={}, className="", color="" }) {
 function GlobalStyles({ dark }) {
   return <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Lora:ital,wght@0,500;0,700;1,400&display=swap');
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    ,::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html,body{height:100%;font-family:'Geist',sans-serif;}
     ::-webkit-scrollbar{width:4px;height:4px;}
     ::-webkit-scrollbar-track{background:transparent;}
@@ -469,7 +469,7 @@ function PageEditor({ page, onUpdate, onBack }) {
         <textarea
           value={page.content}
           onChange={e => onUpdate(page.id, "content", e.target.value)}
-          placeholder="Start writing... Use # for headings, - for bullets, > for quotes, **bold**"
+          placeholder="Start writing... Use # for headings, - for bullets, > for quotes, *bold*"
           autoFocus
           style={{ width:"100%", minHeight:"60vh", background:t.inputBg, border:`1px solid ${t.border}`, borderRadius:10, padding:"16px", color:t.text, fontSize:15, lineHeight:1.75, outline:"none", resize:"none", display:"block" }}
         />
@@ -660,7 +660,7 @@ function ChatPanel({ onClose }) {
           placeholder="Share how you're feeling…"
           style={{ flex:1, background:t.inputBg, border:`1px solid ${t.border}`, borderRadius:11, padding:"9px 13px", color:t.text, fontSize:13, outline:"none" }} />
         <button className="btn tc" onClick={()=>send()}
-          style={{ background:"linear-gradient(135deg,#5b8af0,#c084fc)", width:38, height:38, borderRadius:11, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, boxShadow:"0 2px 10px rgba(91,138,240,0.3)", border:"none", cursor:"pointer", color:"white", fontSize:16, lineHeight:1 }}>
+          style={{ background:"linear-gradient(135deg,#5b8af0,#c084fc)", width:38, height:38, borderRadius:11, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, boxShadow:"0 2px 8px rgba(91,138,240,0.35)", border:"none", cursor:"pointer", color:"white", fontSize:16, lineHeight:1 }}>
           &#9658;
         </button>
       </div>
@@ -910,9 +910,12 @@ function Dashboard() {
   const isNotesHub = !activeNav && activePage && (activePage.id === notesHubPage?.id);
   const notePages = pages.filter(p=>p.type==="page" && p.id !== notesHubPage?.id && !p.id.endsWith("-p1"));
 
-  const topbarTitle = activeNav ? activeNav
-    : openedNote ? `${openedNote.icon} ${openedNote.title}`
-    : activePage ? `${activePage.icon} ${activePage.title}`
+  const topbarTitle = activeNav
+    ? activeNav
+    : openedNote
+    ? `${openedNote.icon} ${openedNote.title}`
+    : activePage
+    ? `${activePage.icon} ${activePage.title}`
     : "MindTask";
 
   const renderContent = () => {
