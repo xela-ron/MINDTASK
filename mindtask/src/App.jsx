@@ -45,13 +45,18 @@ function fallbackResponse(msg) {
 }
 async function getAIResponse(msg, name) {
   try {
-    const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=REPLACE_WITH_YOUR_GEMINI_KEY", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contents: [{ parts: [{ text: `You are MindEase, a warm empathetic mental health companion in a productivity app called MindTask. The user's name is ${name}. Be concise (2-4 sentences), warm, practical. Use gentle emojis. Never diagnose. User: ${msg}` }] }] }),
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: msg, name }),
     });
+    if (!res.ok) throw new Error("AI service error");
     const data = await res.json();
-    return data?.candidates?.[0]?.content?.parts?.[0]?.text || fallbackResponse(msg);
-  } catch { return fallbackResponse(msg); }
+    return data?.reply || fallbackResponse(msg);
+  } catch (error) {
+    console.error("getAIResponse error:", error);
+    return fallbackResponse(msg);
+  }
 }
 
 // ─── MARKDOWN ────────────────────────────────────────────────────────────────

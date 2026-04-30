@@ -1,4 +1,4 @@
-export const GEMINI_API_KEY = "AIzaSyDemo_key_replace_with_real"; // 🔑 Replace with your actual key
+export const GEMINI_API_KEY = "AIzaSyBb2IMJcqYggToYKXbfc0-h3beIXW0-qMc"; // 🔑 Replace with your actual key
 
 const WELLNESS_RESPONSES = [
   {
@@ -51,19 +51,15 @@ export async function getAIResponse(userMessage, userName) {
   const systemPrompt = `You are MindEase, a warm, empathetic mental health support companion embedded in a productivity app called MindTask. The user's name is ${userName}. Your role is to provide emotional support, wellness advice, and help users cope with work-related stress and overwhelm. Be concise (2-4 sentences max), genuinely warm, and practically helpful. Use occasional gentle emojis. Never give clinical diagnoses. Always encourage professional help for serious concerns.`;
 
   try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: `${systemPrompt}\n\nUser: ${userMessage}` }] }],
-        }),
-      }
-    );
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userMessage, name: userName, prompt: systemPrompt }),
+    });
+
+    if (!res.ok) throw new Error("AI backend error");
     const data = await res.json();
-    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    return reply || getWellnessResponse(userMessage);
+    return data?.reply || getWellnessResponse(userMessage);
   } catch {
     return getWellnessResponse(userMessage);
   }
